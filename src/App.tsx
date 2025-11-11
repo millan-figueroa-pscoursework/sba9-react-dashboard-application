@@ -1,6 +1,7 @@
 import { useState } from "react";
-import TaskList from "./components/TaskList/TaskList";
 import type { Task, TaskStatus } from "./types";
+import TaskList from "./components/TaskList/TaskList";
+import TaskFilter from "./components/TaskFilter/TaskFilter";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -53,10 +54,18 @@ function App() {
     setTasks((prev) => prev.filter((task) => task.id !== taskId));
   };
 
+  // receives filters from TaskFilter
+  const handleFilterChange = (filters: {
+    status?: TaskStatus;
+    priority?: "low" | "medium" | "high";
+  }) => {
+    console.log("filter in app:", filters);
+  };
+
   return (
     <div>
       <h1>Task Manager</h1>
-
+      <TaskFilter onFilterChange={handleFilterChange} />
       <TaskList
         tasks={tasks}
         onStatusChange={handleStatusChange}
