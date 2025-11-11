@@ -1,7 +1,8 @@
 import { useState } from "react";
-import type { Task, TaskStatus } from "./types";
+import type { Task, TaskStatus, TaskFormData } from "./types";
 import TaskList from "./components/TaskList/TaskList";
 import TaskFilter from "./components/TaskFilter/TaskFilter";
+import TaskForm from "./components/TaskForm/TaskForm";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -21,24 +22,22 @@ function App() {
       priority: "medium",
       dueDate: "2024-01-01",
     },
-    {
-      id: "3",
-      title: "Task 3",
-      description: "Description 3",
-      status: "completed",
-      priority: "high",
-      dueDate: "2024-01-02",
-    },
-    {
-      id: "4",
-      title: "Task 4",
-      description: "Description 4",
-      status: "in-progress",
-      priority: "high",
-      dueDate: "2024-01-06",
-    },
   ]);
 
+  // add a new task when form is submitted
+  const handleAddTask = (data: TaskFormData) => {
+    const newTask: Task = {
+      id: crypto.randomUUID(), // generates a unique id
+      title: data.title,
+      description: data.description,
+      priority: data.priority,
+      dueDate: data.dueDate,
+      status: "pending", // new tasks start as pending
+    };
+    setTasks((prev) => [newTask, ...prev]);
+  };
+
+  // update a task's status
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
     setTasks((prev) =>
       // map over previous tasks
@@ -65,6 +64,7 @@ function App() {
   return (
     <div>
       <h1>Task Manager</h1>
+      <TaskForm onSubmit={handleAddTask} />
       <TaskFilter onFilterChange={handleFilterChange} />
       <TaskList
         tasks={tasks}
