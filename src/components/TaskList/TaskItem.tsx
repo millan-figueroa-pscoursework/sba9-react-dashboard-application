@@ -38,7 +38,7 @@ export default function TaskItem({
           onChange={(e) =>
             onStatusChange(task.id, e.target.value as TaskStatus)
           }
-          className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded px-2 py-1 text-sm"
         >
           <option value="pending">pending</option>
           <option value="in-progress">in progress</option>
@@ -47,7 +47,7 @@ export default function TaskItem({
 
         <button
           onClick={() => onDelete(task.id)}
-          className="text-sm bg-red-500 text-white rounded px-3 py-1 hover:bg-red-600"
+          className="text-sm bg-violet-400 text-white rounded px-5 py-1 hover:bg-violet-600"
         >
           delete
         </button>
