@@ -4,6 +4,7 @@ import type { Task, TaskStatus, TaskFormData } from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskFilter from "../TaskFilter/TaskFilter";
 import TaskForm from "../TaskForm/TaskForm";
+import { validateTaskData } from "../../utils/taskUtils";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([
@@ -27,6 +28,13 @@ export default function Dashboard() {
 
   // add new task
   const handleAddTask = (data: TaskFormData) => {
+    // utility function that checks form for errors
+    const errors = validateTaskData(data);
+    if (errors.length) {
+      alert(errors.join("\n"));
+      return;
+    }
+
     const newTask: Task = {
       id: crypto.randomUUID(),
       title: data.title,
