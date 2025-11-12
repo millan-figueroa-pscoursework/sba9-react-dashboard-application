@@ -62,60 +62,27 @@ Define TypeScript interfaces for:
 
 ### Data Persistence
 
-- [ ] Add localStorage integration
+- [x] Add localStorage integration
 - [ ] Implement data export/import
-
-### Enhanced UI
-
-- [ ] Implement task reordering
-- [ ] Integrating a drag and drop library could be a fun challenge for this feature
-- [ ] Add support for both light and dark mode
-- [ ] Add a toggle switch to the UI for changing the theme
-- [ ] Pass the theme state down to the components that need it
-- [ ] Add animations and/or transitions for state changes
 
 ## Testing and Finalizing
 
 1. ### Test Your Application:
 
-- [ ] Test all form validations
-- [ ] Verify filtering and sorting functionality
-- [ ] Check responsive design
-- [ ] Test component interactions
+- [x] Test all form validations
+- [x] Verify filtering and sorting functionality
+- [x] Check responsive design
+- [x] Test component interactions
 
 2. ### Code Review:
 
-- [ ] Ensure TypeScript types are properly implemented
-- [ ] Check for proper component composition
-- [ ] Verify state management approach
-- [ ] Review error handling
+- [x] Ensure TypeScript types are properly implemented
+- [x] Check for proper component composition
+- [x] Verify state management approach
+- [x] Review error handling
 
 3. ### Documentation:
 
-- [ ] Add comments to components and functions
-- [ ] Create a README.md with setup instructions
-- [ ] Document component props and usage
-
-## Deliverables
-
-You must submit the following items via Canvas:
-
-1. ### GitHub Repository:
-
-- Link to your GitHub repository with the complete project code
-- Ensure your repository is publicly accessible
-
-2. ### Reflection Document:
-
-Write a reflection addressing:<br>
-
-### How you implemented React and TypeScript features
-
-### The challenges you encountered and how you overcame them
-
-### Your approach to component composition and state management
-
-## Submission Guidelines
-
-1. <b>GitHub Repository</b>: Submit the link to your repository on Canvas.
-2. <b>Reflection Document</b>: Upload your written reflection as a separate file or include it in your repository as a Markdown file.
+- [x] Add comments to components and functions
+- [x] Create a README.md with setup instructions
+- [x] Document component props and usage
