@@ -50,8 +50,9 @@ export default function TaskList({
         </select>
       </div>
 
+      {/* re-render sorted tasks */}
       <ul>
-        {tasks.map((task) => (
+        {sortedTasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
