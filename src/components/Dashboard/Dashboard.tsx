@@ -1,5 +1,6 @@
 // src/components/Dashboard/Dashboard.tsx
 import { useState } from "react";
+import { useEffect } from "react";
 import type { Task, TaskStatus, TaskFormData } from "../../types";
 import TaskList from "../TaskList/TaskList";
 import TaskFilter from "../TaskFilter/TaskFilter";
@@ -7,24 +8,16 @@ import TaskForm from "../TaskForm/TaskForm";
 import { validateTaskData } from "../../utils/taskUtils";
 
 export default function Dashboard() {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: "1",
-      title: "Task 1",
-      description: "Description 1",
-      status: "pending",
-      priority: "low",
-      dueDate: "2023-12-31",
-    },
-    {
-      id: "2",
-      title: "Task 2",
-      description: "Description 2",
-      status: "in-progress",
-      priority: "medium",
-      dueDate: "2024-01-01",
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    // check localStorage and get saved tasks
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // updates localStorage every time state changes
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   // add new task
   const handleAddTask = (data: TaskFormData) => {
