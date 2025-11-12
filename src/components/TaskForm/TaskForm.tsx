@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { TaskFormData, TaskFormProps } from "../../types";
+import { validateTaskData } from "../../utils/taskUtils";
 
 const emptyForm: TaskFormData = {
   title: "",
@@ -18,6 +19,9 @@ export default function TaskForm({
     initialValues ?? emptyForm
   );
 
+  // state var that keep track of error messages
+  const [errors, setErrors] = useState<string[]>([]);
+
   // handle any input, textarea, or select changes
   const handleChange = (
     e: React.ChangeEvent<
@@ -34,12 +38,19 @@ export default function TaskForm({
   // handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // call the parent component function
+
+    // run validation
+    const nextErrors = validateTaskData(formData);
+    setErrors(nextErrors);
+
+    // stop if there are validation errors
+    if (nextErrors.length > 0) return;
+
+    // submit valid form
     onSubmit(formData);
-    // reset the form if adding a new task
-    if (!initialValues) {
-      setFormData(emptyForm);
-    }
+
+    // reset form if adding a new one
+    if (!initialValues) setFormData(emptyForm);
   };
 
   return (
@@ -47,6 +58,14 @@ export default function TaskForm({
       onSubmit={handleSubmit}
       className="flex flex-col border border-gray-200 rounded-md p-3 mb-3 bg-white shadow-sm"
     >
+      {/* render validation messages */}
+      {errors.length > 0 && (
+        <ul className="mb-3 text-sm text-red-600 list-none pl-5">
+          {errors.map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
       {/* title input */}
       <h3 className="text-lg font-semibold text-gray-800 mb-3">
         {initialValues ? "Edit Task" : "Add Task"}
