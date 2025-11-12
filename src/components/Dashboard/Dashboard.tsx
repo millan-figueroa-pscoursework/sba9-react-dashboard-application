@@ -38,6 +38,12 @@ export default function Dashboard() {
     setTasks((prev) => [newTask, ...prev]);
   };
 
+  // filters state stores currently selected status and priority
+  const [filters, setFilters] = useState<{
+    status?: TaskStatus;
+    priority?: "low" | "medium" | "high";
+  }>({});
+
   // change task status
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
     setTasks((prev) =>
@@ -53,12 +59,30 @@ export default function Dashboard() {
   };
 
   // handle filter change
-  const handleFilterChange = (filters: {
+  const handleFilterChange = (filtersUpdate: {
     status?: TaskStatus;
     priority?: "low" | "medium" | "high";
   }) => {
-    console.log("filter in dashboard:", filters);
+    // merge new filters with existing ones so user can select both status and priority
+    setFilters((prev) => ({
+      ...prev,
+      ...filtersUpdate,
+    }));
+    // shows whats happening when filters r changed
+    console.log("filters received in dashboard:", {
+      ...filters,
+      ...filtersUpdate,
+    });
   };
+
+  // apply filters before rendering the task list
+  // 1. if a filer value only include tasks that match it
+  // 2. if no filter set show all tasks for it
+  const filteredTasks = tasks.filter((task) => {
+    if (filters.status && task.status !== filters.status) return false;
+    if (filters.priority && task.priority !== filters.priority) return false;
+    return true; // include task if passes all filters
+  });
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -81,7 +105,7 @@ export default function Dashboard() {
       <section className="border border-gray-200 rounded-md p-3 bg-white shadow-sm">
         <h2 className="text-sm font-semibold text-gray-700 mb-2">tasks</h2>
         <TaskList
-          tasks={tasks}
+          tasks={filteredTasks}
           onStatusChange={handleStatusChange}
           onDelete={handleDelete}
         />
